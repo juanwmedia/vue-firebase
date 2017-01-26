@@ -1,0 +1,25 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Vue.js</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <main>
+        <h1 v-text="mensaje"></h1>
+        <button @click="alReves">Al revés</button>
+        <pre>{{ $data }}</pre>
+    </main>
+    <div id="app">
+        <h1>{{ mensaje }}</h1>
+    </div>
+    <script src="https://unpkg.com/vue@2.1.10/dist/vue.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
