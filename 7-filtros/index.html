@@ -1,0 +1,27 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Vue.js</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <main>
+        <input type="search" v-model="busqueda" placeholder="Buscar juego">
+        <ul>
+            <li v-for="juego in buscarJuego">
+                {{ juego.titulo | alReves }}
+            </li>
+        </ul>
+        <input type="range" min="0" max="10" v-model="minimo">
+        <pre>{{ $data }}</pre>
+    </main>
+    <script src="https://unpkg.com/vue@2.1.10/dist/vue.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
