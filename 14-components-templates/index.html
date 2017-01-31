@@ -1,0 +1,60 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Vue.js</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+<main>
+    <elegir-ganador :listado="personas" inline-template>
+        <div>
+            <h1 v-if="ganador">El ganador es: {{ ganador }}</h1>
+            <template v-else>
+                <h1>Participantes</h1>
+                <ul>
+                    <li v-for="persona in listado">{{ persona }}</li>
+                </ul>
+            </template>
+            <button @click="elegirGanador">Elegir ganador</button>
+        </div>
+    </elegir-ganador>
+    <pre>{{ $data }}</pre>
+</main>
+
+<!-- Con tag template :) -->
+<!--<template id="elegir-ganador-template">
+    <div>
+        <h1 v-if="ganador">El ganador es: {{ ganador }}</h1>
+        <template v-else>
+            <h1>Participantes</h1>
+            <ul>
+                <li v-for="persona in listado">{{ persona }}</li>
+            </ul>
+        </template>
+        <button @click="elegirGanador">Elegir ganador</button>
+    </div>
+</template>-->
+<!-- Con script :( -->
+<!--<script type="text/template" id="elegir-ganador-template">
+    <div>
+        <h1 v-if="ganador">El ganador es: {{ ganador }}</h1>
+        <template v-else>
+            <h1>Participantes</h1>
+            <ul>
+                <li v-for="persona in listado">{{ persona }}</li>
+            </ul>
+        </template>
+        <button @click="elegirGanador">Elegir ganador</button>
+    </div>
+</script>-->
+<script src="https://unpkg.com/vue@2.1.10/dist/vue.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+
+</html>
