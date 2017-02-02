@@ -1,0 +1,43 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Vue.js</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+
+<main>
+    <candidato v-for="candidato in candidatos"
+               :nombre="candidato.name.first"
+               :correoe="candidato.email"
+               :imagen="candidato.picture.thumbnail"
+               >
+    </candidato>
+    <pre>{{ $data }}</pre>
+</main>
+
+<template id="candidato-template">
+    <blockquote>
+        <img :src="imagen" align="right">
+        <h1> {{ nombre }} </h1>
+        <h2> {{ correoe }}</h2>
+        <ul>
+            <li v-for="(value, key, index) in location">
+                {{ value }}
+            </li>
+        </ul>
+        <hr>
+    </blockquote>
+</template>
+<script src="https://unpkg.com/vue@2.1.10/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+
+</html>
