@@ -1,0 +1,37 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Vue.js</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<main>
+    <alerta tipo="alerta--exito" posicion="alerta--arriba-derecha">
+        <template slot="header">Todo ok :)</template>
+        <template>Este es el nuevo contenido del alerta :)</template>
+        <template slot="footer">Puedes continuar con normalidad</template>
+    </alerta>
+
+    <alerta tipo="alerta--error" posicion="alerta--arriba-izquierda">
+        <template slot="header">Error fatal</template>
+        <template>El mundo está a punto de implosionar</template>
+        <template slot="footer">RIP</template>
+    </alerta>
+
+    <alerta tipo="alerta--advertencia" posicion="alerta--abajo-izquierda">
+        <template slot="header">Atención</template>
+        <template>Este es el nuevo contenido del alerta :)</template>
+        <template slot="footer">Puedes continuar con normalidad</template>
+    </alerta>
+
+    <pre>{{ $data }}</pre>
+</main>
+<script src="https://unpkg.com/vue@2.1.10/dist/vue.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
