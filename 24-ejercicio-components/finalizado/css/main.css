@@ -1,0 +1,59 @@
+html {
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.cabecera {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.cabecera slot {
+    flex-basis: 40%;
+}
+
+.cabecera input {
+    flex-basis: 60%;
+}
+
+.usuarios {
+    margin: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.usuario {
+    padding: 10px;
+    flex-basis: 33%;
+    border: 1px solid gray;
+    border-radius: 10px;
+    display: flex;
+}
+
+.usuario img {
+    flex-basis: 33%;
+}
+
+.usuario section {
+    flex-basis: 66%;
+}
+
+pre {
+    flex-basis: 100%;
+}
