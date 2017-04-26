@@ -11,14 +11,14 @@ export const routes = [
     {path: '/prueba', alias: '/otraprueba', redirect: {name: 'home'}, component: Home},
     {
         path: '/equipo/:id', component: Equipo, children: [
-        {
-            path: '', components: {
-            default: Usuario,
-            bio: UsuarioBio,
-            fotos: UsuarioFotos,
-        }, name: 'equipo'
-        },
-    ]
+                {
+                    path: '', components: {
+                    default: Usuario,
+                    bio: UsuarioBio,
+                    fotos: UsuarioFotos,
+                }, name: 'equipo'
+            },
+        ]
     },
     {path: '/contacto', meta: {privado: true}, component: Contacto, name: 'contacto', props: {newsletter: false}},
     {path: '*', component: NoEncontrado}
