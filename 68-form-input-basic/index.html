@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue</title>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        #app {
+            width: 40%;
+            font-family: sans-serif;
+        }
+
+        form > * {
+            display: block;
+            margin: .3em 0;
+            width: 100%;
+        }
+
+        input[type=checkbox], input[type=radio], input[type=radio] ~ label {
+            display: inline-block;
+            width: auto;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <h1>Formulario</h1>
+    <hr>
+    <form @submit.prevent="enviar">
+        <label for="nombre">Nombre:</label>
+        <input required type="text" id="nombre" v-model="formulario.nombre">
+        <label for="apellidos">Apellidos:</label>
+        <input required type="text" id="apellidos" v-model="formulario.apellidos">
+        <label for="consulta">Consulta:</label>
+        <textarea rows="5" id="consulta" v-model="formulario.consulta"></textarea>
+
+        <input type="radio" id="si" value="Si" v-model="formulario.cliente">
+        <label for="si">Soy cliente</label>
+        <br>
+        <input type="radio" id="no" value="No" v-model="formulario.cliente">
+        <label for="no">No soy cliente</label>
+        <br>
+
+        <label for="conocio">¿Dónde nos conoció?</label>
+        <select id="conocio" v-model="formulario.conocio">
+            <option v-for="opcion in conocio" :value="opcion">
+                {{ opcion }}
+            </option>
+        </select>
+
+        <input type="checkbox" id="acepto" v-model="formulario.acepta">
+
+        <label for="acepto">Acepto las condiciones</label>
+        <input v-if="formulario.acepta" type="submit" value="Enviar">
+    </form>
+    <hr>
+    <pre>{{ $data }}</pre>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            formulario: {
+                nombre: null,
+                apellidos: null,
+                consulta: null,
+                cliente: null,
+                conocio: 'Internet',
+                acepta: null,
+            },
+            conocio: [
+                'Amigo o familiar',
+                'Internet',
+                'TV o radio',
+            ]
+        },
+        methods: {
+            enviar() {
+                for (let key in this.formulario) {
+                    console.info(`${key} : ${this.formulario[key]}`);
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>
