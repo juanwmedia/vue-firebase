@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue</title>
+</head>
+<body>
+
+<script src="https://www.gstatic.com/firebasejs/4.1.5/firebase.js"></script>
+<script>
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyBbicItcm46rhJKSeOXvDNdU4mFF7_kRkw",
+        authDomain: "curso-vue-firebase.firebaseapp.com",
+        databaseURL: "https://curso-vue-firebase.firebaseio.com",
+        projectId: "curso-vue-firebase",
+        storageBucket: "curso-vue-firebase.appspot.com",
+        messagingSenderId: "620168406459"
+    };
+    firebase.initializeApp(config);
+
+    // Guardar una referencia a la base de datos
+    var db = firebase.database();
+
+    // Guardar info de perfil
+    db.ref('/perfiles/juanwmedia').set({
+        username: 'juanwmedia',
+        password: '777',
+        ciudad: 'Valencia',
+        pais: 'España'
+    }).then(() => console.info('Datos añadidos'));
+</script>
+</body>
+</html>
