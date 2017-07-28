@@ -5,6 +5,11 @@
     <title>Vue</title>
 </head>
 <body>
+<form id="formulario">
+    <textarea name="mensaje" id="mensaje" cols="30" rows="10"></textarea>
+    <br>
+    <input type="submit" value="Enviar mensaje">
+</form>
 
 <script src="https://www.gstatic.com/firebasejs/4.1.5/firebase.js"></script>
 <script>
@@ -23,12 +28,25 @@
     var db = firebase.database();
 
     // Guardar info de perfil
-    db.ref('/perfiles/juanwmedia').set({
+/*    db.ref('/perfiles/juanwmedia').set({
         username: 'juanwmedia',
         password: '777',
         ciudad: 'Valencia',
         pais: 'España'
-    }).then(() => console.info('Datos añadidos'));
+    }).then(() => console.info('Datos añadidos'));*/
+
+    // Guardar nuevos datos anidados (lista)
+    document.getElementById('formulario').onsubmit= function(event) {
+        event.preventDefault();
+        let mensaje = document.getElementById('mensaje');
+        db.ref('chats').push({
+            username: 'juanwmedia',
+            mensaje: mensaje.value,
+        }).then(() => {
+            console.info('Mensaje enviado');
+            mensaje.value = '';
+        });
+    }
 </script>
 </body>
 </html>
