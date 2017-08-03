@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue</title>
+</head>
+<body>
+<div id="app">
+    <form @submit.prevent="enviarMensaje">
+        <textarea v-model="mensaje" cols="30" rows="10"></textarea>
+        <br>
+        <input type="submit" value="Enviar mensaje">
+    </form>
+    <hr>
+    <h1>Mensajes</h1>
+    <ul>
+        <li v-for="mensaje in mensajes">
+            <span contenteditable="true" @blur="editarMensaje($event, mensaje.key)">
+                {{ mensaje.mensaje}}
+            </span>
+            <small><i>({{ mensaje.username }})</i></small>
+        </li>
+    </ul>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.1.5/firebase.js"></script>
+<script>
+    // Initialize Firebase
+    const config = {
+        apiKey: "AIzaSyBbicItcm46rhJKSeOXvDNdU4mFF7_kRkw",
+        authDomain: "curso-vue-firebase.firebaseapp.com",
+        databaseURL: "https://curso-vue-firebase.firebaseio.com",
+        projectId: "curso-vue-firebase",
+        storageBucket: "curso-vue-firebase.appspot.com",
+        messagingSenderId: "620168406459"
+    };
+    firebase.initializeApp(config);
+    const db = firebase.database();
+
+    // Vue stuff
+    new Vue({
+        el: '#app',
+        created() {
+            db.ref('/chats')
+                .on('value', snapshot => this.cargarMensajes(snapshot.val()))
+        },
+        data: {
+            mensaje: null,
+            username: 'juanwmedia',
+            mensajes: [],
+        },
+        methods: {
+            cargarMensajes(mensajes) {
+                this.mensajes = [];
+                for (let key in mensajes) {
+                    this.mensajes.push({
+                        mensaje: mensajes[key].mensaje,
+                        username: mensajes[key].username,
+                        key: key,
+                    });
+                }
+                this.mensajes.reverse();
+            },
+            enviarMensaje() {
+                db.ref('/chats')
+                    .push({
+                        mensaje: this.mensaje,
+                        username: this.username,
+                    })
+                    .then((data) => {
+                        this.mensaje = '';
+                        console.log(data.key);
+                    });
+            },
+            editarMensaje(mensaje, key) {
+                db.ref('/chats/' + key).update({
+                    mensaje: mensaje.target.innerHTML
+                });
+            }
+        }
+    });
+</script>
+</body>
+</html>
