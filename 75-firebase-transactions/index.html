@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue</title>
+</head>
+<body>
+<div id="app">
+    <h1>Datos del usuario</h1>
+    <dl>
+        <dt><i>Username:</i></dt>
+        <dd>{{ datosPerfil.username }}</dd>
+        <dt><i>Ciudad:</i></dt>
+        <dd>{{ datosPerfil.ciudad }}</dd>
+        <dt><i>País:</i></dt>
+        <dd>{{ datosPerfil.pais }}</dd>
+        <dt><i>Likes:</i></dt>
+        <dd>{{ datosPerfil.likes }}</dd>
+        <button @click="actualizarLikes">Añadir like</button>
+    </dl>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.1.5/firebase.js"></script>
+<script>
+    // Initialize Firebase
+    const config = {
+        apiKey: "AIzaSyBbicItcm46rhJKSeOXvDNdU4mFF7_kRkw",
+        authDomain: "curso-vue-firebase.firebaseapp.com",
+        databaseURL: "https://curso-vue-firebase.firebaseio.com",
+        projectId: "curso-vue-firebase",
+        storageBucket: "curso-vue-firebase.appspot.com",
+        messagingSenderId: "620168406459"
+    };
+    firebase.initializeApp(config);
+    const db = firebase.database();
+
+    // Vue stuff
+    new Vue({
+        el: '#app',
+        created() {
+            db.ref('/perfiles').child('juanwmedia')
+                .on('value', snapshot => this.datosPerfil = snapshot.val());
+        },
+        data: {
+            datosPerfil: {},
+        },
+        methods: {
+            actualizarLikes() {
+                db.ref('/perfiles').child('juanwmedia').child('likes')
+                /*.update({
+                    'likes': this.datosPerfil.likes + 1
+                })*/
+                    .transaction(function (likesActuales) {
+                        return likesActuales + 1;
+                    }, function (error, commited, snapshot) {
+                        if (error) {
+                            console.error(error);
+                        } else if (!commited) {
+                            console.warn('Transacción no realizada');
+                        } else {
+                            console.info('Transacción realizada');
+                            console.log(snapshot.val());
+                        }
+                    });
+            }
+        }
+    });
+</script>
+</body>
+</html>
