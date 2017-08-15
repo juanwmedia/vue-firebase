@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue</title>
+</head>
+<body>
+<div id="app"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.1.5/firebase.js"></script>
+<script>
+    // Initialize Firebase
+    const config = {
+        apiKey: "AIzaSyBbicItcm46rhJKSeOXvDNdU4mFF7_kRkw",
+        authDomain: "curso-vue-firebase.firebaseapp.com",
+        databaseURL: "https://curso-vue-firebase.firebaseio.com",
+        projectId: "curso-vue-firebase",
+        storageBucket: "curso-vue-firebase.appspot.com",
+        messagingSenderId: "620168406459"
+    };
+    firebase.initializeApp(config);
+    const db = firebase.database();
+
+    // Vue stuff
+    new Vue({
+        el: '#app',
+        created() {
+            /*db.ref('chats').push({
+                mensaje: 'Hola, mundo',
+                username: 'juanwmedia',
+            });*/
+            const key = db.ref('chats').push().key;
+            console.log(key);
+            db.ref('chats').child(key).set({
+                mensaje: 'Hola, mundo, desde SET',
+                username: 'juanwmedia',
+            });
+
+            db.ref('/perfiles')
+                .child('juanwmedia').child('chats').child(key)
+                .set(true);
+        },
+    });
+</script>
+</body>
+</html>
