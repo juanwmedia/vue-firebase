@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue</title>
+</head>
+<body>
+<div id="app">
+    <button @click="ordenarPorKeySecundaria('color')">Por Color</button>
+    <button @click="ordenarPorKeySecundaria('edad')">Por Edad</button>
+    <button @click="ordenarPorKey">Por Key del nodo</button>
+    <button @click="ordenarPorValor">Por Valor</button>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.1.5/firebase.js"></script>
+<script>
+    // Initialize Firebase
+    const config = {
+        apiKey: "AIzaSyBbicItcm46rhJKSeOXvDNdU4mFF7_kRkw",
+        authDomain: "curso-vue-firebase.firebaseapp.com",
+        databaseURL: "https://curso-vue-firebase.firebaseio.com",
+        projectId: "curso-vue-firebase",
+        storageBucket: "curso-vue-firebase.appspot.com",
+        messagingSenderId: "620168406459"
+    };
+    firebase.initializeApp(config);
+    const db = firebase.database();
+    const gatosRef = db.ref('gatos');
+
+    // Datos iniciales
+    const gatos = [
+        {nombre: 'Rouco', edad: 5, color: 'blanco y negro'},
+        {nombre: 'Moma', edad: 3, color: 'atrigrado'},
+        {nombre: 'Nino', edad: 1, color: 'negro'},
+        {nombre: 'Guizmo', color: 'negro'},
+    ];
+
+    // Vue stuff
+    new Vue({
+        el: '#app',
+        created() {
+            gatos.forEach(gato => {
+                gatosRef.child(gato.nombre).set({
+                    edad: gato.edad || null,
+                    color: gato.color
+                });
+            });
+
+            this.gatos.orderByChild('edad')
+                .on('child_moved', snapshot => {
+                   console.warn(snapshot.val());
+                });
+        },
+        data: {
+            gatos: gatosRef,
+        },
+        methods: {
+            ordenarPorKeySecundaria(key) {
+                this.gatos.orderByChild(key).on('child_added', snapshot => {
+                    console.log(snapshot.key, snapshot.val());
+                });
+            },
+            ordenarPorKey() {
+                this.gatos.orderByKey().on('child_added', snapshot => {
+                    console.log(snapshot.key, snapshot.val());
+                });
+            },
+            ordenarPorValor() {
+                db.ref('votos').orderByValue().on('child_added', snapshot => {
+                    console.log(snapshot.key, snapshot.val());
+                });
+            }
+        }
+    });
+</script>
+</body>
+</html>
