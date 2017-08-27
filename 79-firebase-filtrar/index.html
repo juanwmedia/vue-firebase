@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue</title>
+</head>
+<body>
+<div id="app"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.1.5/firebase.js"></script>
+<script>
+    // Initialize Firebase
+    const config = {
+        apiKey: "AIzaSyBbicItcm46rhJKSeOXvDNdU4mFF7_kRkw",
+        authDomain: "curso-vue-firebase.firebaseapp.com",
+        databaseURL: "https://curso-vue-firebase.firebaseio.com",
+        projectId: "curso-vue-firebase",
+        storageBucket: "curso-vue-firebase.appspot.com",
+        messagingSenderId: "620168406459"
+    };
+    firebase.initializeApp(config);
+    const gatosRef = firebase.database().ref('gatos');
+
+    // Vue stuff
+    new Vue({
+        el: '#app',
+        created() {
+            this.ordenarPorKeySecundaria('edad');
+        },
+        data: {
+            gatos: gatosRef,
+        },
+        methods: {
+            ordenarPorKeySecundaria(key) {
+                this.gatos
+                    .orderByChild(key)
+                    //.limitToLast(2)
+                    //.startAt(1)
+                    //.endAt(998)
+                    .equalTo(999)
+                    .on('child_added', snapshot => {
+                        console.log(snapshot.key, snapshot.val());
+                    });
+            },
+        }
+    });
+</script>
+</body>
+</html>
